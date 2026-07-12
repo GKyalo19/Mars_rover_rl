@@ -1,0 +1,352 @@
+00:00.385  blend            | Read blend: "/Users/gracekyalo/Downloads/Mars 2020 Perseverance Rover.blend"
+===SUMMARY_JSON===
+{
+  "blender": "5.1.2",
+  "object_count": 74,
+  "by_type": {
+    "MESH": 69,
+    "ARMATURE": 1,
+    "EMPTY": 3,
+    "LIGHT": 1
+  },
+  "mesh_total_verts": 125792,
+  "mesh_total_polys": 97855,
+  "cameras": [],
+  "armatures": [
+    {
+      "name": "Armature",
+      "bones": [
+        "Bone",
+        "Bone.001",
+        "Bone.002",
+        "Bone.003",
+        "Bone.004",
+        "Bone.005",
+        "Bone.006",
+        "Bone.007",
+        "Bone.008",
+        "Bone.009",
+        "Bone.010",
+        "Bone.011",
+        "Bone.012",
+        "Bone.013",
+        "Bone.014"
+      ]
+    }
+  ],
+  "keyword_hits": {
+    "antenna": [
+      "antenna_hg",
+      "antenna_lg",
+      "antenna_uhf"
+    ],
+    "arm": [
+      "arm",
+      "arm.001",
+      "arm.002",
+      "arm.003",
+      "arm.004",
+      "arm_01",
+      "arm_01_joint",
+      "arm_01_pivot",
+      "arm_02",
+      "arm_02.001",
+      "arm_02_joint",
+      "arm_02_pivot",
+      "arm_cable_etc",
+      "Armature"
+    ],
+    "joint": [
+      "arm_01_joint",
+      "arm_02_joint"
+    ],
+    "base": [
+      "base"
+    ],
+    "body": [
+      "Body",
+      "Body.002",
+      "Body.003",
+      "Body_Parts",
+      "Body_Parts.001"
+    ],
+    "cam": [
+      "Down_Look_Camera",
+      "hazcams_front",
+      "hazcams_front_cover",
+      "hazcams_rear",
+      "hazcams_rear_cover_l",
+      "hazcams_rear_cover_r",
+      "hazcams_rear_wiring",
+      "Mastcam_Z_cams",
+      "NavCams",
+      "Up_Look_Camera"
+    ],
+    "haz": [
+      "hazcams_front",
+      "hazcams_front_cover",
+      "hazcams_rear",
+      "hazcams_rear_cover_l",
+      "hazcams_rear_cover_r",
+      "hazcams_rear_wiring"
+    ],
+    "mast": [
+      "Mastcam_Z_cams"
+    ],
+    "nav": [
+      "NavCams"
+    ],
+    "suspension": [
+      "suspension"
+    ],
+    "wheel": [
+      "Wheels_objs"
+    ]
+  },
+  "collections": [
+    {
+      "name": "Arm",
+      "n": 5
+    },
+    {
+      "name": "arm_cable",
+      "n": 1
+    },
+    {
+      "name": "Body",
+      "n": 1
+    },
+    {
+      "name": "body_parts_other",
+      "n": 5
+    },
+    {
+      "name": "chopper_deploy_parts",
+      "n": 8
+    },
+    {
+      "name": "Collection",
+      "n": 5
+    },
+    {
+      "name": "Down_Look_Camera",
+      "n": 1
+    },
+    {
+      "name": "Front_HazCams",
+      "n": 2
+    },
+    {
+      "name": "High-Gain_Antenna",
+      "n": 1
+    },
+    {
+      "name": "Low-Gain_Antenna",
+      "n": 1
+    },
+    {
+      "name": "Mast",
+      "n": 6
+    },
+    {
+      "name": "mast.001",
+      "n": 6
+    },
+    {
+      "name": "Mastcam-Z",
+      "n": 1
+    },
+    {
+      "name": "MEDA",
+      "n": 8
+    },
+    {
+      "name": "Microphones",
+      "n": 2
+    },
+    {
+      "name": "Name_Chips",
+      "n": 1
+    },
+    {
+      "name": "NavCams",
+      "n": 1
+    },
+    {
+      "name": "Power_Source",
+      "n": 1
+    },
+    {
+      "name": "Rear_HazCams",
+      "n": 5
+    },
+    {
+      "name": "RIMFAX",
+      "n": 1
+    },
+    {
+      "name": "Sample_Handling",
+      "n": 1
+    },
+    {
+      "name": "SuperCam",
+      "n": 1
+    },
+    {
+      "name": "Suspension",
+      "n": 1
+    },
+    {
+      "name": "suspension.001",
+      "n": 5
+    },
+    {
+      "name": "Turret",
+      "n": 13
+    },
+    {
+      "name": "UHF_Antenna",
+      "n": 1
+    },
+    {
+      "name": "Up_Look_Camera",
+      "n": 1
+    },
+    {
+      "name": "Wheels",
+      "n": 1
+    }
+  ],
+  "constraint_count": 1,
+  "constraints_sample": [
+    {
+      "object": "Cylinder.001",
+      "type": "COPY_ROTATION",
+      "name": "Copy Rotation"
+    }
+  ],
+  "units": {
+    "system": "NONE",
+    "scale_length": 1.0,
+    "length_unit": "ADAPTIVE"
+  },
+  "roots": [
+    "antenna_hg",
+    "antenna_lg",
+    "antenna_uhf",
+    "arm.001",
+    "arm.003",
+    "arm_01_joint",
+    "arm_02_joint",
+    "arm_cable_etc",
+    "Armature",
+    "base",
+    "Body",
+    "Body.002",
+    "Body.003",
+    "Body_Parts",
+    "Body_Parts.001",
+    "box",
+    "calibration_target",
+    "calibration_target_bracket",
+    "Cylinder",
+    "Down_Look_Camera",
+    "Empty",
+    "hazcams_front",
+    "hazcams_front_cover",
+    "hazcams_rear",
+    "hazcams_rear_cover_l",
+    "hazcams_rear_cover_r",
+    "hazcams_rear_wiring",
+    "lab",
+    "Lamp",
+    "microphones",
+    "Name_Chips",
+    "pan_end cover",
+    "part_01",
+    "probe",
+    "RIMFAX",
+    "rtg",
+    "suspension",
+    "Up_Look_Camera",
+    "Wheels_objs"
+  ]
+}
+===OBJECT_TREE===
+Armature [ARMATURE]
+  bottom.001 [MESH] v=92 f=88 dim=[0.199, 0.238, 0.045]
+Body [MESH] v=1437 f=1414 dim=[1.548, 2.081, 0.826]
+Body.002 [MESH] v=82 f=68 dim=[0.066, 0.05, 0.115]
+Body.003 [MESH] v=82 f=68 dim=[0.066, 0.05, 0.115]
+Body_Parts [MESH] v=6880 f=5196 dim=[1.522, 2.066, 0.814]
+Body_Parts.001 [MESH] v=1024 f=767 dim=[0.225, 0.171, 0.15]
+Cylinder [MESH] v=16 f=10 dim=[0.033, 0.033, 0.033]
+  bottom [MESH] v=2609 f=2133 dim=[0.197, 0.263, 0.523]
+    Cylinder.001 [MESH] v=64 f=34 dim=[0.011, 0.011, 0.011]
+    Empty.001 [EMPTY]
+    bottom.002 [MESH] v=288 f=254 dim=[0.25, 0.4, 0.07]
+    bottom.003 [MESH] v=228 f=184 dim=[0.227, 0.221, 0.119]
+    probe.001 [MESH] v=176 f=141 dim=[0.151, 0.121, 0.05]
+    top [MESH] v=2058 f=927 dim=[0.306, 0.239, 0.291]
+      Cylinder.002 [MESH] v=16 f=10 dim=[0.046, 0.046, 0.046]
+        head [MESH] v=1125 f=999 dim=[0.549, 0.304, 0.468]
+          Mastcam_Z_cams [MESH] v=468 f=378 dim=[0.331, 0.269, 0.106]
+          NavCams [MESH] v=978 f=854 dim=[0.508, 0.173, 0.108]
+          lens [MESH] v=286 f=243 dim=[0.15, 0.109, 0.151]
+          microphones.001 [MESH] v=16 f=9 dim=[0.011, 0.027, 0.011]
+Down_Look_Camera [MESH] v=875 f=486 dim=[0.129, 0.104, 0.153]
+Empty [EMPTY]
+Lamp [LIGHT]
+Name_Chips [MESH] v=170 f=134 dim=[0.209, 0.086, 0.078]
+RIMFAX [MESH] v=145 f=64 dim=[0.613, 0.382, 0.205]
+Up_Look_Camera [MESH] v=244 f=146 dim=[0.044, 0.065, 0.048]
+Wheels_objs [MESH] v=34380 f=36666 dim=[2.705, 2.785, 0.526]
+antenna_hg [MESH] v=4439 f=1890 dim=[0.336, 0.551, 0.3]
+antenna_lg [MESH] v=328 f=218 dim=[0.066, 0.066, 0.176]
+antenna_uhf [MESH] v=1132 f=558 dim=[0.208, 0.208, 0.412]
+arm.001 [MESH] v=493 f=458 dim=[0.333, 0.423, 0.349]
+arm.003 [MESH] v=640 f=552 dim=[0.384, 0.365, 0.235]
+  arm.002 [MESH] v=792 f=599 dim=[0.903, 0.167, 0.359]
+    arm [MESH] v=1285 f=1026 dim=[0.958, 0.359, 0.286]
+      arm.004 [MESH] v=458 f=427 dim=[0.325, 0.222, 0.349]
+        turret_obj [MESH] v=8512 f=7638 dim=[0.59, 0.736, 0.3]
+          PIXL [MESH] v=525 f=470 dim=[0.177, 0.233, 0.198]
+          WATSON [MESH] v=362 f=293 dim=[0.135, 0.13, 0.197]
+          corring_drill [MESH] v=165 f=118 dim=[0.062, 0.071, 0.058]
+          cover_02 [MESH] v=436 f=216 dim=[0.027, 0.043, 0.05]
+          cover_03 [MESH] v=436 f=216 dim=[0.013, 0.048, 0.05]
+          hinge [MESH] v=16 f=10 dim=[0.017, 0.017, 0.017]
+            PIXL_cover_01 [MESH] v=308 f=123 dim=[0.027, 0.038, 0.06]
+          hinge_cover_01 [EMPTY]
+          turret_obj.002 [MESH] v=380 f=302 dim=[0.122, 0.215, 0.208]
+          turret_obj.004 [MESH] v=38 f=22 dim=[0.171, 0.227, 0.209]
+          turret_obj.006 [MESH] v=20 f=5 dim=[0.137, 0.122, 0.162]
+          turret_parts [MESH] v=319 f=214 dim=[0.14, 0.333, 0.276]
+arm_01_joint [MESH] v=348 f=223 dim=[0.035, 0.097, 0.023]
+  arm_01_pivot [MESH] v=16 f=10 dim=[0.018, 0.018, 0.018]
+    arm_01 [MESH] v=412 f=199 dim=[0.082, 0.107, 0.023]
+arm_02_joint [MESH] v=320 f=138 dim=[0.045, 0.178, 0.046]
+  arm_02_pivot [MESH] v=16 f=10 dim=[0.016, 0.016, 0.016]
+    arm_02 [MESH] v=465 f=210 dim=[0.163, 0.165, 0.078]
+    arm_02.001 [MESH] v=157 f=75 dim=[0.169, 0.668, 0.051]
+arm_cable_etc [MESH] v=1769 f=747 dim=[0.252, 0.724, 0.276]
+base [MESH] v=562 f=178 dim=[0.288, 0.228, 0.155]
+box [MESH] v=941 f=438 dim=[0.412, 0.387, 0.277]
+calibration_target [MESH] v=26 f=15 dim=[0.02, 0.15, 0.061]
+calibration_target_bracket [MESH] v=162 f=71 dim=[0.162, 0.357, 0.242]
+hazcams_front [MESH] v=9238 f=4333 dim=[0.42, 0.189, 0.161]
+hazcams_front_cover [MESH] v=356 f=150 dim=[0.411, 0.101, 0.076]
+hazcams_rear [MESH] v=6488 f=2800 dim=[1.062, 0.2, 0.237]
+hazcams_rear_cover_l [MESH] v=399 f=122 dim=[0.065, 0.078, 0.155]
+hazcams_rear_cover_r [MESH] v=396 f=121 dim=[0.065, 0.078, 0.155]
+hazcams_rear_wiring [MESH] v=184 f=168 dim=[0.949, 0.144, 0.051]
+lab [MESH] v=8714 f=4155 dim=[0.556, 0.552, 0.342]
+microphones [MESH] v=16 f=9 dim=[0.011, 0.027, 0.011]
+pan_end cover [MESH] v=88 f=23 dim=[0.249, 0.123, 0.003]
+part_01 [MESH] v=316 f=166 dim=[0.239, 0.354, 0.226]
+probe [MESH] v=0 f=0 dim=[0.0, 0.0, 0.0]
+rtg [MESH] v=6029 f=5468 dim=[1.15, 0.974, 0.932]
+suspension [MESH] v=13551 f=11398 dim=[2.334, 2.468, 0.989]
+Blender 5.1.2 (hash ec6e62d40fa9 built 2026-05-19 01:30:33)
+
+Blender quit

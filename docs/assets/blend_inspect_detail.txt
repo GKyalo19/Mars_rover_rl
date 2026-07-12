@@ -1,0 +1,70 @@
+00:00.338  blend            | Read blend: "/Users/gracekyalo/Downloads/Mars 2020 Perseverance Rover.blend"
+===ARMATURE===
+bones: ['Bone', 'Bone.001', 'Bone.002', 'Bone.003', 'Bone.004', 'Bone.005', 'Bone.006', 'Bone.007', 'Bone.008', 'Bone.009', 'Bone.010', 'Bone.011', 'Bone.012', 'Bone.013', 'Bone.014']
+  bone Bone head=(0.0, 0.0, 0.0) tail=(0.0, 0.0, 1.0) parent=None
+  bone Bone.001 head=(0.0, 0.0, 1.0) tail=(0.075, 0.0482, 2.3673) parent=Bone
+  bone Bone.002 head=(0.075, 0.0482, 2.3673) tail=(0.325, 0.209, 3.155) parent=Bone.001
+  bone Bone.003 head=(0.325, 0.209, 3.155) tail=(0.5251, 0.3376, 3.6751) parent=Bone.002
+  bone Bone.004 head=(0.5251, 0.3376, 3.6751) tail=(0.8376, 0.5385, 4.1656) parent=Bone.003
+  bone Bone.005 head=(0.8376, 0.5385, 4.1656) tail=(1.1626, 0.7474, 4.5669) parent=Bone.004
+  bone Bone.006 head=(1.1626, 0.7474, 4.5669) tail=(1.5002, 0.9644, 4.9235) parent=Bone.005
+  bone Bone.007 head=(1.5002, 0.9644, 4.9235) tail=(1.8877, 1.2136, 5.2505) parent=Bone.006
+  bone Bone.008 head=(1.8877, 1.2136, 5.2505) tail=(2.3377, 1.5029, 5.5032) parent=Bone.007
+  bone Bone.009 head=(2.3377, 1.5029, 5.5032) tail=(2.7378, 1.7601, 5.6369) parent=Bone.008
+  bone Bone.010 head=(2.7378, 1.7601, 5.6369) tail=(3.3379, 2.1459, 5.7558) parent=Bone.009
+  bone Bone.011 head=(3.3379, 2.1459, 5.7558) tail=(3.9048, 2.517, 5.7748) parent=Bone.010
+  bone Bone.012 head=(3.9048, 2.517, 5.7748) tail=(4.3382, 2.82, 5.773) parent=Bone.011
+  bone Bone.013 head=(4.3382, 2.82, 5.773) tail=(5.1147, 3.2895, 5.7653) parent=Bone.012
+  bone Bone.014 head=(5.1147, 3.2895, 5.7653) tail=(5.6949, 3.6958, 5.5569) parent=Bone.013
+  deformed: bottom.001 -> Armature
+===WHEELS===
+single mesh verts=34380 polys=36666 dim=(2.7046, 2.7853, 0.5259) loc=(0.0, 0.035, 0.2637)
+loose_parts=54 top_sizes=[3456, 3456, 3456, 3456, 3456, 3456, 330, 330, 330, 330, 330, 330]
+large_part_centroids (count, xyz):
+  (3456, (1.184, 0.055, 0.0))
+  (3456, (1.062, 1.13, 0.001))
+  (3456, (1.062, -1.13, -0.0))
+  (3456, (-1.062, 1.13, -0.0))
+  (3456, (-1.062, -1.13, -0.0))
+  (3456, (-1.184, 0.055, 0.0))
+===SUSPENSION===
+type=MESH verts=13551 dim=(2.3338, 2.4685, 0.9885) children=[]
+suspension loose_parts=185 top_sizes=[520, 520, 432, 432, 432, 432, 424, 424, 368, 368, 264, 264, 240, 240, 168]
+===CAMERA_NAMED===
+Down_Look_Camera type=MESH parent=None dim=(0.129, 0.104, 0.153) loc=(0.647, -0.668, 0.779)
+Mastcam_Z_cams type=MESH parent=head dim=(0.331, 0.269, 0.106) loc=(-0.554, -0.715, 2.057)
+NavCams type=MESH parent=head dim=(0.508, 0.173, 0.108) loc=(-0.555, -0.766, 1.972)
+Up_Look_Camera type=MESH parent=None dim=(0.044, 0.065, 0.048) loc=(-0.388, 0.603, 1.33)
+hazcams_front type=MESH parent=None dim=(0.42, 0.189, 0.161) loc=(-0.077, -0.972, 0.724)
+hazcams_front_cover type=MESH parent=None dim=(0.411, 0.101, 0.076) loc=(0.088, -0.982, 0.683)
+hazcams_rear type=MESH parent=None dim=(1.062, 0.2, 0.237) loc=(0.472, 1.142, 0.779)
+hazcams_rear_cover_l type=MESH parent=None dim=(0.065, 0.078, 0.155) loc=(0.513, 1.223, 0.815)
+hazcams_rear_cover_r type=MESH parent=None dim=(0.065, 0.078, 0.155) loc=(-0.513, 1.223, 0.815)
+hazcams_rear_wiring type=MESH parent=None dim=(0.949, 0.144, 0.051) loc=(0.472, 1.142, 0.779)
+===WORLD_BOUNDS===
+min=(-1.3523, -1.372, 0.0008) max=(1.3523, 1.7363, 1.8463) size=(2.7046, 3.1083, 1.8455)
+XY footprint ~ 2.705 x 3.108, height 1.846 (real Perseverance ~3.0 x 2.7 x 2.2 m)
+===PHYSICS===
+rigid_bodies=0 rb_constraints=0
+actual CAMERA objects=0
+EMPTY objects=['Empty', 'Empty.001', 'hinge_cover_01']
+===PARENTING FLATNESS===
+root_count=39 (many roots = not a single articulated tree)
+===KEY_COLLECTIONS===
+Body -> ['Body']
+body_parts_other -> ['Body_Parts', 'calibration_target', 'part_01', 'calibration_target_bracket', 'box']
+Down_Look_Camera -> ['Down_Look_Camera']
+Front_HazCams -> ['hazcams_front', 'hazcams_front_cover']
+Mast -> ['bottom', 'head', 'top', 'probe', 'base', 'bottom.001']
+mast.001 -> ['base', 'bottom', 'head', 'probe', 'top', 'Cylinder.001']
+Mastcam-Z -> ['Mastcam_Z_cams']
+NavCams -> ['NavCams']
+Rear_HazCams -> ['Empty', 'hazcams_rear', 'hazcams_rear_cover_l', 'hazcams_rear_cover_r', 'hazcams_rear_wiring']
+SuperCam -> ['lens']
+Suspension -> ['suspension']
+suspension.001 -> ['base', 'bottom', 'head', 'probe', 'top']
+Up_Look_Camera -> ['Up_Look_Camera']
+Wheels -> ['Wheels_objs']
+Blender 5.1.2 (hash ec6e62d40fa9 built 2026-05-19 01:30:33)
+
+Blender quit
