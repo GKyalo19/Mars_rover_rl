@@ -1,0 +1,25 @@
+Metadata-Version: 2.4
+Name: mars_rover_rl
+Version: 0.1.0
+Summary: Perseverance Mars navigation RL environments for Isaac Lab 3 / Isaac Sim 6.
+Home-page: https://github.com/gracekyalo/Mars_rover_rl
+Author: Grace Kyalo
+Maintainer: Grace Kyalo
+License: BSD-3-Clause
+Keywords: isaaclab,mars,rover,perseverance,rl,ppo,navigation
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Isaac Sim :: 6.0.0
+Requires-Python: >=3.10
+Requires-Dist: psutil
+Requires-Dist: toml
+Dynamic: author
+Dynamic: classifier
+Dynamic: home-page
+Dynamic: keywords
+Dynamic: license
+Dynamic: maintainer
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary

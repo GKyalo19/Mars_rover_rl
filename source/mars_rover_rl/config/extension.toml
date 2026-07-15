@@ -1,0 +1,51 @@
+[package]
+
+# Semantic Versioning: MAJOR.MINOR.PATCH (https://semver.org/)
+# 0.1.0 = early development; bump MINOR when we add features, PATCH for fixes.
+version = "0.1.0"
+
+# Human-readable name shown in Isaac / Omniverse extension UIs.
+title = "Mars Rover RL"
+
+# Who maintains this extension (change to your name/email anytime).
+author = "Grace Kyalo"
+maintainer = "Grace Kyalo"
+
+# One-line summary of what this package does.
+description = "Perseverance Mars navigation RL environments for Isaac Lab 3 / Isaac Sim 6."
+
+# Optional path to a readme relative to this extension folder.
+readme = "docs/README.md"
+
+# Your future GitHub URL (update when you create the remote).
+repository = "https://github.com/gracekyalo/Mars_rover_rl"
+
+# Helps Omniverse group extensions in browsers/filters.
+category = "isaaclab"
+
+# Search tags — not used by Python imports, just metadata.
+keywords = ["isaaclab", "mars", "rover", "perseverance", "rl", "ppo", "navigation"]
+
+[dependencies]
+# These are *Isaac Sim extension* dependencies (not pip packages).
+# Empty {} means "require this extension to be enabled; any compatible version".
+# Isaac Lab must already be installed on the NVIDIA machine.
+"isaaclab" = {}
+"isaaclab_assets" = {}
+"isaaclab_rl" = {}
+"isaaclab_tasks" = {}
+
+[core]
+# If true, Omniverse can hot-reload the extension while the app runs.
+# false is safer while we are still learning / changing APIs often.
+reloadable = false
+
+[[python.module]]
+# THIS is the import name: `import mars_rover`
+# It must match the nested folder: source/mars_rover_rl/mars_rover/
+name = "mars_rover"
+
+[isaac_lab_settings]
+# Uncomment later only if you need system packages or a ROS workspace.
+# apt_deps = ["example_package"]
+# ros_ws = "path/from/extension_root/to/ros_ws"

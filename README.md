@@ -12,11 +12,14 @@ Train the **2020 Mars Perseverance Rover** to navigate Mars-like terrain with re
 
 ## Documentation first
 
-We are building this in chapters. Start here:
+We build in chapters — you implement, the docs guide:
 
-**[Chapter 1 — Software architecture & PPO primer](docs/chapters/01_software_architecture.md)**
+**Current:** [Chapter 7 — PPO training loop (RSL-RL)](docs/chapters/07_ppo_training_loop.md)
 
-Full doc map: [docs/README.md](docs/README.md)
+Code for recent chapters lives **in the docs** — you copy it into your package files.
+
+
+
 
 ## Repo status
 

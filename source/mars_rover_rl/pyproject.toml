@@ -1,0 +1,10 @@
+# Tells pip/build tools HOW to build this package.
+# We still use setup.py for the actual metadata (Isaac Lab template style).
+
+[build-system]
+# setuptools: the classic Python packaging library.
+# wheel: builds installable wheel archives.
+# toml: needed because setup.py reads config/extension.toml.
+# setuptools pinned <82 to match Isaac Lab's own template (compatibility).
+requires = ["setuptools<82.0.0", "wheel", "toml"]
+build-backend = "setuptools.build_meta"
