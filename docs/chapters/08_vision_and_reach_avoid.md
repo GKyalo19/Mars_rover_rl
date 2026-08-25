@@ -169,7 +169,7 @@ from isaaclab.sensors import TiledCameraCfg
 # ---- forward hazard camera (depth) ----
 hazcam_front = TiledCameraCfg(
     prim_path="{ENV_REGEX_NS}/Robot/base_link/hazcam_front",  # match your USD camera prim
-    offset=TiledCameraCfg.OffsetCfg(pos=(0.3, 0.0, 0.3), rot=(1.0, 0.0, 0.0, 0.0)),
+    offset=TiledCameraCfg.OffsetCfg(pos=(0.3, 0.0, 0.3), rot=(0.0, 0.0, 0.0, 1.0)),  # Lab 3.0 (x, y, z, w) identity
     data_types=["distance_to_camera"],  # depth; add "rgb" later if you want color too
     spawn=None,  # camera prim already exists in the USD (Ch.3/3b); don't re-spawn it
     width=64,
@@ -304,11 +304,82 @@ class VisionActorCritic(ActorCritic):
         return super().evaluate(self._fuse(vector_obs, depth_img), **kwargs)
 ```
 
-**File:** update `mars_rover/envs/navigation/agents/rsl_rl_ppo_cfg.py` — add a vision variant alongside `PerseverancePPORunnerCfg`:
+**File:** `mars_rover/envs/navigation/agents/rsl_rl_ppo_cfg.py` — full file, both runner configs together:
 
 ```python
+# Copyright (c) 2026, Mars_rover_rl contributors.
+# SPDX-License-Identifier: BSD-3-Clause
+
+"""RSL-RL PPO settings for Perseverance navigation.
+
+These numbers are *starting points*. Expect to tune after you see TensorBoard curves.
+
+Two runner configs live here:
+  - PerseverancePPORunnerCfg        (Ch.7, Phase A  — vector obs only)
+  - PerseveranceVisionPPORunnerCfg  (Ch.8 Track B, optional — vector + depth camera)
+"""
+
+from __future__ import annotations
+
+from isaaclab.utils import configclass
+from isaaclab_rl.rsl_rl import RslRlOnPolicyRunnerCfg, RslRlPpoActorCriticCfg, RslRlPpoAlgorithmCfg
+
+
+@configclass
+class PerseverancePPORunnerCfg(RslRlOnPolicyRunnerCfg):
+    """Phase A: vector-observation-only PPO settings (Ch.7)."""
+
+    # How many env steps to collect per env between updates
+    num_steps_per_env = 24
+    # How many collect+update cycles to run
+    max_iterations = 2000
+    # Save checkpoints every N iterations
+    save_interval = 100
+    # Folder name under logs/
+    experiment_name = "perseverance_nav"
+    # Run name optional; timestamp used if empty
+    run_name = ""
+    # Resume helpers
+    resume = False
+    load_run = ".*"
+    load_checkpoint = "model_.*.pt"
+
+    policy = RslRlPpoActorCriticCfg(
+        init_noise_std=1.0,  # exploration noise at start
+        actor_obs_normalization=True,
+        critic_obs_normalization=True,
+        actor_hidden_dims=[256, 128, 64],
+        critic_hidden_dims=[256, 128, 64],
+        activation="elu",
+    )
+
+    algorithm = RslRlPpoAlgorithmCfg(
+        value_loss_coef=1.0,
+        use_clipped_value_loss=True,
+        clip_param=0.2,          # PPO epsilon
+        entropy_coef=0.01,       # exploration encouragement
+        num_learning_epochs=5,
+        num_mini_batches=4,
+        learning_rate=1.0e-3,
+        schedule="adaptive",
+        gamma=0.99,              # discount
+        lam=0.95,                # GAE lambda
+        desired_kl=0.01,
+        max_grad_norm=1.0,
+    )
+
+
 @configclass
 class PerseveranceVisionPPORunnerCfg(PerseverancePPORunnerCfg):
+    """Ch.8 Track B (optional): swaps in the depth-camera-fused actor-critic.
+
+    Inherits every PPO/algorithm knob from PerseverancePPORunnerCfg unchanged —
+    only the policy network class and log folder name differ. Requires
+    VisionActorCritic (mars_rover/envs/navigation/agents/vision_actor_critic.py)
+    to be importable wherever RSL-RL resolves ``class_name``.
+    """
+
+    # Separate log folder so vision runs don't mix with Phase A vector runs.
     experiment_name = "perseverance_nav_vision"
 
     policy = RslRlPpoActorCriticCfg(
@@ -318,6 +389,9 @@ class PerseveranceVisionPPORunnerCfg(PerseverancePPORunnerCfg):
         critic_hidden_dims=[256, 128, 64],
         activation="elu",
     )
+    # algorithm block intentionally omitted — inherited unchanged from
+    # PerseverancePPORunnerCfg above. Override here later if vision training
+    # needs different PPO hyperparameters (e.g. lower learning_rate).
 ```
 
 **Important honesty note:** whether `class_name` accepts an arbitrary custom class this way (vs. requiring registration elsewhere) depends on your exact `rsl_rl` release. Treat this block as a **starting sketch**, not copy-paste-guaranteed — read `rsl_rl/runners/on_policy_runner.py` in your installed package to confirm how it instantiates the policy class before a real run.

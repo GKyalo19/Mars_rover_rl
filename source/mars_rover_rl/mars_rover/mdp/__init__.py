@@ -11,6 +11,20 @@ Isaac-dependent observation/action modules live in sibling files and are
 imported only from env configs on the NVIDIA / Isaac Lab environment.
 """
 
-from mars_rover.mdp.kinematics import WHEEL_ORDER, twist_to_wheel_velocities
+from mars_rover.mdp.kinematics import (
+    CHASSIS_BODY_NAME,
+    ROVER_WHEEL_JOINTS,
+    WHEEL_ACTION_SCALE,
+    WHEEL_ORDER,
+    WHEEL_VEL_LIMIT,
+    twist_to_wheel_velocities,
+)
 
-__all__ = ["WHEEL_ORDER", "twist_to_wheel_velocities"]
+__all__ = [
+    "CHASSIS_BODY_NAME",
+    "ROVER_WHEEL_JOINTS",
+    "WHEEL_ACTION_SCALE",
+    "WHEEL_ORDER",
+    "WHEEL_VEL_LIMIT",
+    "twist_to_wheel_velocities",
+]

@@ -1,9 +1,10 @@
 # Chapter 7 — PPO Training Loop (RSL-RL)
 
 > **How we work**  
+>
 > - Explanations + full code live **in this chapter**.  
 > - **You** create files and paste while reading.  
-> - I will **not** write into your `source/` package unless you ask.  
+> - I will **not** write into your `source/` package unless you ask.
 >
 > **Goal:** Assemble the full navigation environment, register it with Gymnasium, configure PPO, and understand how to launch training with **RSL-RL** on the NVIDIA machine.  
 > **Depends on:** Ch.2–6 (package, obs/actions, rewards/terminations, terrain/goals).  
@@ -12,18 +13,22 @@
 
 ---
 
+
+
 ## 7.0 Bigger picture — the student finally enters the classroom
 
 All previous chapters built **classroom infrastructure**:
 
-| Chapter | Built |
-|---------|-------|
-| 2 | Importable library |
-| 3 / 3b | Physical rover (joints, drives) |
-| 4 | Senses + intents (`o`, `[v,ω]`) |
-| 5 | Gradebook + end-of-exam bell |
-| 6 | Mars yard + destinations |
-| **7** | **The student (PPO) who studies by driving** |
+
+| Chapter | Built                                        |
+| ------- | -------------------------------------------- |
+| 2       | Importable library                           |
+| 3 / 3b  | Physical rover (joints, drives)              |
+| 4       | Senses + intents (`o`, `[v,ω]`)              |
+| 5       | Gradebook + end-of-exam bell                 |
+| 6       | Mars yard + destinations                     |
+| **7**   | **The student (PPO) who studies by driving** |
+
 
 ```text
 gym.make("Mars-Perseverance-Nav-v0")
@@ -39,14 +44,16 @@ OnPolicyRunner / PPO
   collect rollouts → compute advantages → clipped update → repeat
 ```
 
+
+
 ### Industry parallel
 
 This is the standard **“env factory + trainer”** pattern used across robot learning labs:
 
-1. Register a task id (`Mars-Perseverance-Nav-v0`)  
-2. `gym.make(task)` builds the vectorized simulator  
-3. A library-specific **wrapper** adapts interfaces  
-4. A **runner** owns the learning loop and checkpoints  
+1. Register a task id (`Mars-Perseverance-Nav-v0`)
+2. `gym.make(task)` builds the vectorized simulator
+3. A library-specific **wrapper** adapts interfaces
+4. A **runner** owns the learning loop and checkpoints
 
 Isaac Lab already ships battle-tested `train.py` scripts under `scripts/reinforcement_learning/rsl_rl/`.  
 In this chapter you will:
@@ -58,7 +65,11 @@ In this chapter you will:
 
 ---
 
+
+
 ## 7.1 Jargon, explained properly
+
+
 
 ### Gymnasium / `gym.make` / registration
 
@@ -96,13 +107,15 @@ Your env cfg is another entry point:
 "mars_rover.envs.navigation.config.navigation_env_cfg:NavigationEnvCfg"
 ```
 
+
+
 ### ManagerBasedRLEnv
 
 This is Isaac Lab’s environment class that:
 
 - owns the scene (terrain, robot, sensors)  
 - runs observation / action / reward / termination / command / event **managers**  
-- steps many envs in parallel on GPU  
+- steps many envs in parallel on GPU
 
 You rarely subclass it for Phase A. You mostly write **configs**; Lab builds the env from them.
 
@@ -130,7 +143,9 @@ You already met PPO math in Chapter 1. Here PPO becomes a running program:
 - collect on-policy rollouts  
 - estimate advantages (GAE)  
 - optimize clipped surrogate + value loss − entropy bonus  
-- save checkpoints  
+- save checkpoints
+
+
 
 ### On-policy
 
@@ -142,26 +157,32 @@ PPO is on-policy → you continually gather fresh driving experience after each 
 
 ### Rollout / iteration
 
-| Term | Meaning |
-|------|---------|
-| **Step** | One env control tick (action → physics → reward) |
-| **Rollout** | A stretch of steps collected before an update (per env: `num_steps_per_env`) |
-| **Iteration** | One “collect + learn” cycle of the runner |
+
+| Term                 | Meaning                                                                        |
+| -------------------- | ------------------------------------------------------------------------------ |
+| **Step**             | One env control tick (action → physics → reward)                               |
+| **Rollout**          | A stretch of steps collected before an update (per env: `num_steps_per_env`)   |
+| **Iteration**        | One “collect + learn” cycle of the runner                                      |
 | **Epoch** (learning) | How many times we reuse the same rollout batch for gradient updates inside PPO |
-| **Mini-batch** | Slice of the rollout used for one optimizer step |
+| **Mini-batch**       | Slice of the rollout used for one optimizer step                               |
+
 
 Example intuition:
 
 - 128 envs  
 - 24 steps per env per iteration  
-- → \(128 \times 24 = 3072\) transitions collected per iteration  
+- → 128 \times 24 = 3072 transitions collected per iteration
+
+
 
 ### Actor–Critic (again, practical)
 
-| Network | Job in training |
-|---------|-----------------|
-| **Actor** (policy) | Outputs mean (and std) of `[v, ω]` distribution |
+
+| Network            | Job in training                                                     |
+| ------------------ | ------------------------------------------------------------------- |
+| **Actor** (policy) | Outputs mean (and std) of `[v, ω]` distribution                     |
 | **Critic** (value) | Predicts expected return from observation — baseline for advantages |
+
 
 Both are MLPs for Phase A (vector observations). Vision policies come in Ch.8.
 
@@ -170,7 +191,9 @@ Both are MLPs for Phase A (vector observations). Vision policies come in Ch.8.
 A **checkpoint** is a saved snapshot of network weights (and often optimizer/runner state) you can reload to:
 
 - resume training  
-- play / evaluate (Ch.9)  
+- play / evaluate (Ch.9)
+
+
 
 ### Hyperparameters
 
@@ -180,7 +203,7 @@ Knobs that are **not** learned by gradient descent but chosen by you:
 - `gamma`, `lam` (GAE)  
 - clip `epsilon`  
 - network width  
-- entropy coefficient  
+- entropy coefficient
 
 Bad hyperparameters can make a correct MDP look “unlearnable.” Tuning is part of the craft.
 
@@ -188,7 +211,7 @@ Bad hyperparameters can make a correct MDP look “unlearnable.” Tuning is par
 
 **Decimation** = how many physics substeps run per one RL action.
 
-If `sim.dt = 1/60` and `decimation = 4`, the policy acts at \(60/4 = 15\) Hz.
+If `sim.dt = 1/60` and `decimation = 4`, the policy acts at 60/4 = 15 Hz.
 
 Too fast acting → twitchy, costly. Too slow → sluggish control. Start with Lab-like values and adjust.
 
@@ -200,23 +223,27 @@ You still log metrics; you just do not render pretty windows every step.
 
 ---
 
+
+
 ## 7.2 PPO in one operational paragraph (tying Ch.1 to code)
 
 Each iteration roughly:
 
-1. For `num_steps_per_env` steps, in all envs:  
-   - observe \(o\)  
-   - sample \(a \sim \pi_\theta(\cdot\mid o)\)  
-   - step env → \(r\), \(o'\), done  
-   - store transition  
-2. Compute advantages \(\hat{A}\) with GAE (\(\gamma\), \(\lambda\)).  
-3. For several epochs / mini-batches, maximize PPO’s **clipped** objective, fit the value function, keep some **entropy** for exploration.  
-4. Save logs; periodically checkpoint.  
+1. For `num_steps_per_env` steps, in all envs:
+  - observe o  
+  - sample a \sim \pi_\theta(\cdot\mid o)  
+  - step env → r, o', done  
+  - store transition
+2. Compute advantages \hat{A} with GAE (\gamma, \lambda).
+3. For several epochs / mini-batches, maximize PPO’s **clipped** objective, fit the value function, keep some **entropy** for exploration.
+4. Save logs; periodically checkpoint.
 5. Repeat until `max_iterations`.
 
 Your Ch.4–6 work decides whether those transitions contain a learnable skill. PPO only optimizes whatever reward you defined.
 
 ---
+
+
 
 ## 7.3 Files you will create (you paste)
 
@@ -237,7 +264,11 @@ scripts/
 
 ---
 
+
+
 ## 7.4 Assemble the env cfg — full code to copy
+
+
 
 ### File: `envs/navigation/config/navigation_env_cfg.py`
 
@@ -302,21 +333,29 @@ class NavigationEnvCfg(ManagerBasedRLEnvCfg):
             self.scene.height_scanner.update_period = self.sim.dt * self.decimation
 ```
 
+
+
 ### How to read this file
 
-| Block | Role |
-|-------|------|
-| `scene` | The Mars yard + rover + sensors |
-| `observations` / `actions` | Policy I/O (Ch.4) |
-| `rewards` / `terminations` | Teaching + episode ends (Ch.5) |
-| `commands` / `events` | Goals + resets (Ch.6) |
-| `__post_init__` | Clock rates for sim vs policy |
+
+| Block                      | Role                            |
+| -------------------------- | ------------------------------- |
+| `scene`                    | The Mars yard + rover + sensors |
+| `observations` / `actions` | Policy I/O (Ch.4)               |
+| `rewards` / `terminations` | Teaching + episode ends (Ch.5)  |
+| `commands` / `events`      | Goals + resets (Ch.6)           |
+| `__post_init__`            | Clock rates for sim vs policy   |
+
 
 This is the puzzle frame that holds every previous piece.
 
 ---
 
+
+
 ## 7.5 Register the Gym task — full code to copy
+
+
 
 ### File: update `mars_rover/envs/navigation/__init__.py`
 
@@ -350,17 +389,23 @@ And that `pip install -e` is done in the **Isaac Lab Python** on NVIDIA.
 
 ### What each register field means
 
-| Field | Meaning |
-|-------|---------|
-| `id` | Public task name you pass to `--task` |
-| `entry_point` | Env class to construct |
-| `env_cfg_entry_point` | Your MDP blueprint |
-| `rsl_rl_cfg_entry_point` | Your PPO hyperparameters class |
-| `disable_env_checker` | Lab envs are tensor/vectorized; Gym’s default checker is too strict |
+
+| Field                    | Meaning                                                             |
+| ------------------------ | ------------------------------------------------------------------- |
+| `id`                     | Public task name you pass to `--task`                               |
+| `entry_point`            | Env class to construct                                              |
+| `env_cfg_entry_point`    | Your MDP blueprint                                                  |
+| `rsl_rl_cfg_entry_point` | Your PPO hyperparameters class                                      |
+| `disable_env_checker`    | Lab envs are tensor/vectorized; Gym’s default checker is too strict |
+
 
 ---
 
+
+
 ## 7.6 PPO agent config — full code to copy
+
+
 
 ### File: `mars_rover/envs/navigation/agents/rsl_rl_ppo_cfg.py`
 
@@ -421,20 +466,26 @@ class PerseverancePPORunnerCfg(RslRlOnPolicyRunnerCfg):
     )
 ```
 
+
+
 ### Hyperparameter meanings in rover English
 
-| Knob | If too low | If too high |
-|------|------------|-------------|
-| `learning_rate` | Learns glacially | Unstable / collapses |
-| `clip_param` | Tiny updates, slow | Large policy swings |
-| `entropy_coef` | Exploits early, may get stuck | Wiggles forever |
-| `gamma` | Myopic (only near rewards) | Values distant future (needs stable bootstrap) |
-| `num_steps_per_env` | Noisy advantages | Stale on-policy data / more memory |
-| network width | Underfits | Slower, may overfit noise |
+
+| Knob                | If too low                    | If too high                                    |
+| ------------------- | ----------------------------- | ---------------------------------------------- |
+| `learning_rate`     | Learns glacially              | Unstable / collapses                           |
+| `clip_param`        | Tiny updates, slow            | Large policy swings                            |
+| `entropy_coef`      | Exploits early, may get stuck | Wiggles forever                                |
+| `gamma`             | Myopic (only near rewards)    | Values distant future (needs stable bootstrap) |
+| `num_steps_per_env` | Noisy advantages              | Stale on-policy data / more memory             |
+| network width       | Underfits                     | Slower, may overfit noise                      |
+
 
 For navigation with a modest vector obs, `[256, 128, 64]` is a reasonable first try — larger than cartpole toys, smaller than giant vision nets.
 
 ---
+
+
 
 ## 7.7 Zero-agent smoke test — full code to copy (do this before PPO)
 
@@ -502,6 +553,8 @@ if __name__ == "__main__":
 
 ---
 
+
+
 ## 7.8 Training launch options
 
 ### Option A — Use Isaac Lab’s official RSL-RL train script (recommended)
@@ -523,7 +576,30 @@ On the NVIDIA machine, from your Isaac Lab install:
   --max_iterations 2000
 ```
 
-Lab’s script will look up `rsl_rl_cfg_entry_point` from your `gym.register` kwargs.
+### What each line actually does
+
+`isaaclab.sh` is Isaac Lab's own launcher script — it wraps Lab's bundled Python/conda environment so you don't have to manually `source` or `conda activate` anything. Every command below runs *through* it rather than calling `python` directly.
+
+| Command | Plain English | One-time or every time? |
+|---|---|---|
+| `./isaaclab.sh -i rsl_rl` | `-i` = **install**. Tells Lab's own installer to pull in the `rsl_rl` pip package (the PPO library itself, from Rudin et al.) into Lab's bundled Python environment. This is a Lab *dependency*, not your code. | **Once** per Isaac Lab install — re-run only if you reinstall/upgrade Lab, or delete/rebuild its env. |
+| `./isaaclab.sh -p -m pip install -e /path/to/.../mars_rover_rl` | `-p` = **run the following using Lab's own Python interpreter** (not your Mac `.venv`, not system Python). `-m pip install -e ...` is the *same* editable install from Ch.2 §2.9 — but this time it registers `mars_rover` inside **Lab's** environment instead of your Mac venv, which is what lets `import mars_rover.envs` succeed when Isaac Sim's own Python process runs it. | **Once**, then automatically stays in sync — `-e` (editable) means future edits to your `.py` files apply without reinstalling. Only re-run if you move the repo path or add new top-level packages. |
+| `./isaaclab.sh -p scripts/.../train.py --task Mars-Perseverance-Nav-v0 --headless --num_envs 64 --max_iterations 2000` | The actual training launch. Runs Lab's **own, pre-built** PPO training entry script (you didn't write this file — it ships with Isaac Lab) using Lab's Python. | **Every time** you start a training run. |
+
+### The `train.py` flags, one at a time
+
+| Flag | Meaning | Where else you've seen this number |
+|---|---|---|
+| `--task Mars-Perseverance-Nav-v0` | The Gym id you registered in §7.5. This is how the generic Lab script finds *your* env cfg and *your* agent cfg — it doesn't know anything about Perseverance by itself. | `gym.register(id=...)` in §7.5 |
+| `--headless` | Skip opening the live 3D viewport window; physics/PPO still run at full speed, metrics still log normally. | §7.9.1 — this is the flag that trades away the "live viewport" option |
+| `--num_envs 64` | How many parallel rover clones to simulate. Overrides `NavigationEnvCfg.scene`'s default (`num_envs=64` in §7.4) from the command line, so you can try `--num_envs 4` for a quick check without editing the config file. | `MarsNavSceneCfg(num_envs=64, ...)` in §7.4 |
+| `--max_iterations 2000` | How many collect-rollout + PPO-update cycles to run before stopping. Overrides `PerseverancePPORunnerCfg.max_iterations` (also `2000` by default, in §7.6) from the command line. | `max_iterations = 2000` in §7.6 |
+
+**Why CLI flags can override the same values the config classes already set:** Lab's `train.py` builds the config objects first, then applies any matching CLI args on top — handy for quick experiments (`--num_envs 4 --max_iterations 50` to sanity-check a run in a minute) without permanently editing `navigation_env_cfg.py` or `rsl_rl_ppo_cfg.py`.
+
+### How the script finds your hyperparameters without a `--ppo_config` flag
+
+Lab's script will look up `rsl_rl_cfg_entry_point` from your `gym.register` kwargs (§7.5) — that's the string `"mars_rover.envs.navigation.agents.rsl_rl_ppo_cfg:PerseverancePPORunnerCfg"`. So `--task Mars-Perseverance-Nav-v0` alone is enough for the script to locate *both* your env config *and* your PPO hyperparameters; the task id is effectively "one string that unlocks two config classes."
 
 ### Option B — Thin project `scripts/train.py` (educational)
 
@@ -587,6 +663,8 @@ if __name__ == "__main__":
 ```
 
 ---
+
+
 
 ## 7.9 Watching training — three different kinds of "seeing"
 
@@ -671,12 +749,14 @@ Then open the printed `http://localhost:6006` URL in a browser.
 
 ### Curves that matter early
 
-| Signal | Healthy early trend |
-|--------|---------------------|
-| Episode reward | Noisy but slowly rising |
-| Episode length | May fall if success terminations increase, or rise if fewer instant crashes |
-| Surrogate / value loss | Should not explode |
-| Entropy | Often decreases gradually as policy gets decisive |
+
+| Signal                 | Healthy early trend                                                         |
+| ---------------------- | --------------------------------------------------------------------------- |
+| Episode reward         | Noisy but slowly rising                                                     |
+| Episode length         | May fall if success terminations increase, or rise if fewer instant crashes |
+| Surrogate / value loss | Should not explode                                                          |
+| Entropy                | Often decreases gradually as policy gets decisive                           |
+
 
 If reward is flat forever: revisit Ch.5 weights and Ch.6 goal distance — not only LR.
 
@@ -697,37 +777,45 @@ The "you still log metrics; you just don't render pretty windows" line from the 
 
 ---
 
+
+
 ## 7.10 Realistic expectations (important honesty)
 
 You can paste all Chapter 7 files today, but **training will fail** until:
 
-1. `MarsNavSceneCfg.robot` is a real `ArticulationCfg` pointing at your USD  
-2. Wheel joint names match `ActionsCfg`  
-3. Contact sensor paths are valid  
-4. You run on NVIDIA with Isaac Sim / Lab + `rsl_rl` installed  
+1. `MarsNavSceneCfg.robot` is a real `ArticulationCfg` pointing at your USD
+2. Wheel joint names match `ActionsCfg`
+3. Contact sensor paths are valid
+4. You run on NVIDIA with Isaac Sim / Lab + `rsl_rl` installed
 
 Chapter 7’s job is to make the **learning pipeline** clear and ready so the moment the robot asset is wired, you are not inventing training infrastructure under panic.
 
 ---
 
+
+
 ## 7.11 Checklist
 
-1. Explain gym registration vs env cfg vs agent cfg in your own words.  
-2. Paste `navigation_env_cfg.py`.  
-3. Paste gym.register into navigation `__init__.py` and ensure package import triggers it.  
-4. Paste `PerseverancePPORunnerCfg`.  
-5. Paste `zero_agent.py`.  
-6. On NVIDIA (when robot ready): zero-agent smoke test → then Lab `train.py`.  
+1. Explain gym registration vs env cfg vs agent cfg in your own words.
+2. Paste `navigation_env_cfg.py`.
+3. Paste gym.register into navigation `__init__.py` and ensure package import triggers it.
+4. Paste `PerseverancePPORunnerCfg`.
+5. Paste `zero_agent.py`.
+6. On NVIDIA (when robot ready): zero-agent smoke test → then Lab `train.py`.
 7. Write notes: first hyperparams you might change if reward is stuck.
 
 ---
 
+
+
 ## 7.12 Looking ahead
 
 - **Ch.8** — cameras / reach-avoid ideas on top of a working policy loop  
-- **Ch.9** — play checkpoints, metrics, failure analysis  
+- **Ch.9** — play checkpoints, metrics, failure analysis
 
 ---
+
+
 
 ## 7.13 North star
 

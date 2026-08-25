@@ -12,7 +12,7 @@ author = "Grace Kyalo"
 maintainer = "Grace Kyalo"
 
 # One-line summary of what this package does.
-description = "Perseverance Mars navigation RL environments for Isaac Lab 3 / Isaac Sim 6."
+description = "Perseverance Mars navigation RL environments for Isaac Lab v3.0.0-beta2.patch1 / Isaac Sim 6.0.1."
 
 # Optional path to a readme relative to this extension folder.
 readme = "docs/README.md"

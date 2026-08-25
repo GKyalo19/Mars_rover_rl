@@ -1,43 +1,29 @@
 # Copyright (c) 2026, Mars_rover_rl contributors.
 # SPDX-License-Identifier: BSD-3-Clause
 
-"""Action wiring diagram for Perseverance navigation (Phase A).
+"""Action wiring for Perseverance Baseline v1.
 
-Connects the policy's 2D output to our DifferentialDriveActionTerm.
-
-Requires Isaac Lab (NVIDIA).
+Default: Isaac Lab JointVelocityActionCfg → six wheel velocity targets.
+The 2-D differential-drive term remains in the package as a later experiment.
 """
 
 from __future__ import annotations
 
+from isaaclab.envs.mdp.actions.actions_cfg import JointVelocityActionCfg
 from isaaclab.utils import configclass
 
-from mars_rover.mdp.actions.actions_cfg import DifferentialDriveActionCfg
+from mars_rover.mdp.kinematics import ROVER_WHEEL_JOINTS, WHEEL_VEL_LIMIT, wheel_action_scale_map
 
 
 @configclass
 class ActionsCfg:
-    """Action terms available in the env.
+    """Policy output is 6-D: one angular-velocity command per wheel."""
 
-    Puzzle piece: the *name* ``chassis_twist`` is how other code refers to this
-    term. The policy still outputs a single concatenated action vector; the
-    ActionManager slices it according to each term's ``action_dim``.
-    """
-
-    chassis_twist = DifferentialDriveActionCfg(
+    wheel_vel = JointVelocityActionCfg(
         asset_name="robot",
-        # Update these strings to match your articulated USD joint names.
-        wheel_joint_names=[
-            "wheel_FL_joint",
-            "wheel_FR_joint",
-            "wheel_ML_joint",
-            "wheel_MR_joint",
-            "wheel_RL_joint",
-            "wheel_RR_joint",
-        ],
-        track_width=2.0,
-        wheel_radius=0.26,
-        scale=(0.8, 0.8),
-        max_linear_vel=0.8,
-        max_angular_vel=0.8,
+        joint_names=list(ROVER_WHEEL_JOINTS),
+        scale=wheel_action_scale_map(),
+        preserve_order=True,
+        use_default_offset=False,
+        clip={".*": (-WHEEL_VEL_LIMIT, WHEEL_VEL_LIMIT)},
     )

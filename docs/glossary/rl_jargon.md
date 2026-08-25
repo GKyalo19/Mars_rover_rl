@@ -99,5 +99,14 @@ Short definitions. Expanded explanations live in the chapters that introduce the
 | **Safety filter / shield** | Runtime check that overrides a policy's action when it looks unsafe; lightweight stand-in for full HJ reachability. |
 | **Control barrier function (CBF)** | Scalar function whose sign indicates safe vs. unsafe; formal basis for principled safety filters. |
 | **Backup policy** | The fallback action (e.g. "stop") a shield substitutes for an unsafe policy action. |
+| **Deterministic action (eval)** | Using the policy's mean output instead of sampling — no exploration noise, for evaluation/deployment. |
+| **Success rate** | Fraction of evaluated episodes ending in `goal_reached`. |
+| **Collision rate** | Fraction of evaluated episodes ending in `illegal_contact`. |
+| **Timeout rate** | Fraction of evaluated episodes ending in `time_out`. |
+| **Time-to-goal** | Episode length (steps/seconds), measured only over successful episodes. |
+| **Path efficiency** | Straight-line start-to-goal distance ÷ actual distance traveled; near 1.0 = direct route. |
+| **Failure mode** | A recurring *pattern* among failures (not just a count) that points at a specific root cause. |
+| **Ablation** | Re-evaluating with exactly one thing changed, to isolate that change's effect on metrics. |
+| **Held-out evaluation seed** | Using a different terrain/goal random seed for eval than training, to avoid measuring memorization. |
 
 Add rows as new chapters introduce terms.

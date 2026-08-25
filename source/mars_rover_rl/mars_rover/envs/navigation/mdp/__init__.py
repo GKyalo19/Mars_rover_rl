@@ -1,6 +1,3 @@
-# Copyright (c) 2026, Mars_rover_rl contributors.
-# SPDX-License-Identifier: BSD-3-Clause
-
 """Re-exports for navigation MDP terms (used by env config modules).
 
 Importing this package requires Isaac Lab (NVIDIA). For Mac-only kinematics::

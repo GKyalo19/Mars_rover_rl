@@ -13,7 +13,7 @@ The `-e` means *editable*: you can change code without reinstalling.
 import os
 
 import toml
-from setuptools import setup
+from setuptools import find_packages, setup
 
 # Absolute path to this file's directory (= the extension root).
 EXTENSION_PATH = os.path.dirname(os.path.realpath(__file__))
@@ -31,11 +31,11 @@ INSTALL_REQUIRES = [
 ]
 
 setup(
-    # Pip distribution name (what `pip show` lists). Can differ from the import name.
+    # Pip / import distribution name.
     name="mars_rover_rl",
-    # MUST match the nested folder name: source/mars_rover_rl/mars_rover/
-    # This is what makes `import mars_rover` work.
-    packages=["mars_rover"],
+    # Folders under this extension root that contain Python packages.
+    # Matches: source/mars_rover_rl/mars_rover/
+    packages=find_packages(),
     author=EXTENSION_TOML_DATA["package"]["author"],
     maintainer=EXTENSION_TOML_DATA["package"]["maintainer"],
     url=EXTENSION_TOML_DATA["package"]["repository"],
@@ -46,13 +46,14 @@ setup(
     license="BSD-3-Clause",
     # Include non-.py files declared by package data / MANIFEST if we add any.
     include_package_data=True,
-    # Isaac Lab 3 expects modern Python (3.10+).
+    # Isaac Lab 3.0 Beta 2 on the ASUS uses Python 3.12; Mac tests can be 3.10+.
     python_requires=">=3.10",
     classifiers=[
         "Natural Language :: English",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
-        "Isaac Sim :: 6.0.0",
+        "Programming Language :: Python :: 3.12",
+        "Isaac Sim :: 6.0.1",
     ],
     # zip_safe=False: prefer extracted files on disk (extensions + assets).
     zip_safe=False,

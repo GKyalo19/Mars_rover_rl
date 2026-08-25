@@ -8,9 +8,9 @@ This is the *root* of the importable package:
     import mars_rover
     print(mars_rover.__version__)
 
-Keep this file free of `isaaclab` imports for now so you can still
+Keep this file free of `isaaclab` imports so you can still
 `import mars_rover` on the Mac for packaging smoke tests.
-Gym env registration will live under `mars_rover.envs` in a later chapter.
+Gym env registration lives under `mars_rover.envs` (import on NVIDIA).
 """
 
 __version__ = "0.1.0"

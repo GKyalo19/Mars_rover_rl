@@ -10,8 +10,10 @@ import torch
 from mars_rover.mdp.kinematics import WHEEL_ORDER, twist_to_wheel_velocities
 
 
-def test_wheel_order_has_six_names():
+def test_wheel_order_is_spec_side_order():
+    assert WHEEL_ORDER == ("FL", "ML", "RL", "FR", "MR", "RR")
     assert len(WHEEL_ORDER) == 6
+    assert len(set(WHEEL_ORDER)) == 6
 
 
 def test_straight_line_equal_wheel_speeds():
@@ -31,14 +33,15 @@ def test_spin_in_place_opposite_sides():
     B = 2.0
     r = 0.5
     out = twist_to_wheel_velocities(v, w, track_width=B, wheel_radius=r)
-    # v_L = 0 - 1*(B/2) = -1 → ω_L = -2; v_R = +1 → ω_R = +2
     expected_left = -1.0 / r
     expected_right = 1.0 / r
+    # FL, ML, RL
     assert torch.allclose(out[0, 0], torch.tensor(expected_left))
+    assert torch.allclose(out[0, 1], torch.tensor(expected_left))
     assert torch.allclose(out[0, 2], torch.tensor(expected_left))
-    assert torch.allclose(out[0, 4], torch.tensor(expected_left))
-    assert torch.allclose(out[0, 1], torch.tensor(expected_right))
+    # FR, MR, RR
     assert torch.allclose(out[0, 3], torch.tensor(expected_right))
+    assert torch.allclose(out[0, 4], torch.tensor(expected_right))
     assert torch.allclose(out[0, 5], torch.tensor(expected_right))
 
 
